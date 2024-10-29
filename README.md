@@ -13,5 +13,7 @@ Trainer Profiles: Information about each trainer, showcasing their expertise and
 
 Admin Dashboard: A powerful admin interface for managing users and courses, ensuring the platform is up-to-date and user-friendly.
 
-Technologies Used:
-Frontend: HTML, CSS, JavaScript
+Technologies Used
+HTML, CSS, JavaScript: For frontend UI development
+MySQL: Database for storing user and course data
+Java (Spring Boot): Backend logic and REST API development (optional, if applicable)
