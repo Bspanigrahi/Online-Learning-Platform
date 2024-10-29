@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Trainers</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* Basic reset for margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+		body {
+		    position: relative;
+		    font-family: Arial, sans-serif;
+		
+            
+			text-align: center;
+			background-image: url('harsha.jpeg');
+			
+        }
+		body::before {
+		    content: "";
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    background-image: url('/avaailable.jpg'); /* Your background image path */
+		    background-size: cover;
+		    background-position: center;
+		    background-repeat: no-repeat;
+		    filter: blur(10px); /* Apply the blur effect */
+		    z-index: -3; /* Place the background behind the content */
+		    opacity: 0.8; /* Optional: Add some transparency for a softer effect */
+		}
+        /* Navbar styles */
+        header {
+            background-color: #ffffff;
+            padding: 10px 20px;
+            
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        /* Header logo/title */
+        header h1 {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Flex container for nav links */
+        nav {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center; /* Center the navigation links */
+            gap: 30px; /* Add space between links */
+        }
+
+        /* Navbar link styles */
+        nav a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #333;
+        }
+
+        nav a:hover {
+            color: teal;
+        }
+
+        /* Sign-in button */
+        .sign-in a {
+            text-decoration: none;
+            background-color: teal;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .sign-in a:hover {
+            background-color: #005f5f;
+        }
+
+        /* Main content styling */
+        main {
+            margin-top: 120px; /* Ensure main content is below fixed navbar */
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+           
+            width: 80%;
+            max-width: 900px;
+            margin: 150px auto; /* Center main content */
+			box-shadow: 0px 0px 9px 9px rgb(255, 255, 255); /* Add some shadow for depth */
+        }
+
+        /* Button styling */
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #343a40;
+            color: white;
+        }
+
+        td {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>E-Learning Hub</h1>
+        <!-- Centered navigation links -->
+        <nav>
+			<a href="/test.html">Home</a>
+						           <a href="/about.html">About</a>
+
+						           <a href="/Admin.html">Admin</a>
+								   <a href="/available-trainers.html">Trainer</a>
+								  
+						           <a href="/available-courses.html">Courses</a>
+
+								<a href="/contact.html">Contact Us.</a>
+        </nav>
+        <!-- Right-aligned sign-in button -->
+		<div class="sign-in">
+		           <a href="/users.html">Buy Course</a>
+		       </div>
+    </header>  
+    
+    <main>
+        <h1>Available Trainers</h1>
+        <button id="loadCoursesBtn">Load Trainers</button>
+        <table id="courseTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Subject</th>
+                    <th>Qualification</th>
+                    <th>Email</th>
+                    <th>Mobile Number</th>
+                </tr>
+            </thead>
+            <tbody id="userList"></tbody>
+        </table>
+    </main>
+    
+    <script>
+        document.getElementById('loadCoursesBtn').addEventListener('click', function () {
+            fetch('/trainerForm/trainers') // Ensure this matches your endpoint
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const userList = document.getElementById('userList'); // Use correct ID here
+                    userList.innerHTML = ''; // Clear previous list if any
+
+                    // Assuming 'data' is an array of trainers, iterate over it to create <tr> elements
+                    data.forEach(trainer => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${trainer.id}</td>
+                            <td>${trainer.name}</td>
+                            <td>${trainer.subject}</td>
+                            <td>${trainer.qualification}</td>
+                            <td>${trainer.email}</td>
+                            <td>${trainer.mobileNumber}</td>
+                        `;
+                        userList.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching trainers:', error);
+                });
+        });
+    </script>
+
+</body>
+</html>

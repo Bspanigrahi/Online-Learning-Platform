@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset some basic styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('contactimg.jpg');
+            background-size: cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* Header styling */
+        header {
+			background-color: #ffffff;
+				    padding: 20px;
+				    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+				    display: flex;
+				    align-items: center;
+				    width: 100%; /* Ensures header takes full width */
+				    position: fixed; /* Fix position at the top */
+				    top: 0; /* Align to top */
+				    left: 0; /* Align to left */
+				    z-index: 1000; /* Ensure it stays on top */
+				    justify-content: space-between;
+				    padding-bottom: 4px;
+				    padding: 20px;
+        }
+
+		header h1 {
+				    font-size: 24px;
+				    color: #333;
+				    font-weight: bold;
+				    margin: 0; /* Remove margin */
+				}
+
+				nav {
+				    flex-grow: 1;
+				    display: flex;
+				    justify-content: center; /* Center the navigation items */
+				    gap: 30px;
+				}
+
+				nav a {
+				    text-decoration: none;
+				    font-size: 16px;
+				    color: #333;
+				}
+
+				nav a:hover {
+				    color: teal;
+				}
+
+        /* Sign In Button */
+        .sign-in {
+            margin-left: auto;
+        }
+
+        .sign-in a {
+            text-decoration: none;
+            background-color: teal;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .sign-in a:hover {
+            background-color: #005f5f;
+        }
+
+        .contact-container {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 500px;
+            text-align: center;
+            margin: 20px auto;
+			box-shadow: 0px 0px 12px 17px rgba(0, 0, 0, 0.1); /* Add some shadow for depth */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: white;
+        }
+
+        label {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: yellow;
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 20px;
+        }
+
+        .social-media i {
+            font-size: 30px;
+        }
+
+        .contact-info {
+            margin-top: 20px;
+            font-size: 16px;
+            color: white;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 18px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>E-Learning Hub</h1>
+    <nav>
+		<a href="/test.html">Home</a>
+					           <a href="/about.html">About</a>
+
+					           <a href="/Admin.html">Admin</a>
+							   <a href="/available-trainers.html">Trainer</a>
+							  
+					           <a href="/available-courses.html">Courses</a>
+
+							<a href="/contact.html">Contact Us.</a>
+    </nav>
+    <div class="sign-in">
+        <a href="/users.html">Buy Course</a>
+    </div>
+</header>
+
+<main>
+<div class="contact-container">
+    <h1>Contact Us</h1>
+    <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="feedback"></div>
+
+    <div class="contact-info">
+        <p><strong>Email:</strong> info@institute.com</p>
+        <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+    </div>
+
+    <div class="social-media">
+        <a href="https://www.linkedin.com/institute" target="_blank">
+            <i class="fab fa-linkedin" style="color: rgb(0, 255, 255);"></i>
+        </a>
+        <a href="https://www.instagram.com/institute" target="_blank">
+            <i class="fa-brands fa-instagram" style="color: rgb(255, 0, 0);"></i>
+        </a>
+        <a href="https://www.twitter.com/institute" target="_blank">
+            <i class="fa-brands fa-twitter" style="color: rgb(128, 255, 255);"></i>
+        </a>
+        <a href="https://www.facebook.com/institute" target="_blank">
+            <i class="fa-brands fa-facebook" style="color: rgb(0, 255, 255);"></i>
+        </a>
+    </div>
+</div>
+
+<script>
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        const feedback = document.getElementById('feedback');
+
+        if (name && email && message) {
+            feedback.innerHTML = '<p class="success-message">Thank you, your message has been sent!</p>';
+        } else {
+            feedback.innerHTML = '<p class="error-message">Please fill in all the fields.</p>';
+        }
+    });
+</script>
+</main>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Information</title>
+    <style>
+        /* Reset some basic styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+			font-size: medium;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            background-image: url('/trainerr.jpeg'); /* Background image */
+            text-align: center;
+            color: white;
+		    background-color: rgba(255, 255, 255, 0.3); /* A translucent background color */
+		    backdrop-filter: blur(7px); 
+        }
+
+        /* Header styling */
+        header {
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+            padding: 3px;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #333;
+        }
+
+        nav a:hover {
+            color: teal;
+        }
+
+        h2 {
+            color: white;
+            background-color: #007bff;
+            border-radius: 9px;
+            padding: 8px;
+            margin-top: 20px;
+            text-align: center;
+			margin: 10px;
+        }
+
+        table {
+		    width: 80%;
+		    max-width: 600px;
+		    margin: 20px auto;
+		    border-collapse: collapse;
+			box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+			background-color: rgba(255, 255, 255, 0.3);
+		    backdrop-filter: blur(10px); 
+		}
+
+		th, td {
+		    padding: 10px;
+		    border: 1px solid #ddd;
+		    text-align: center;
+		}
+
+		th {
+		    background-color: #007bff;
+		    color: white;
+		}
+
+		.sign-in {
+		    margin-left: auto;
+		}
+
+		.sign-in a {
+		    text-decoration: none;
+		    background-color: teal;
+		    color: white;
+		    padding: 10px 20px;
+		    border-radius: 5px;
+		}
+
+		.sign-in a:hover {
+		    background-color: #005f5f;
+		}
+
+        /* Responsive adjustments */
+		@media (max-width: 600px) {
+		    table {
+		        width: 100%;
+		    }
+
+		    th, td {
+		        font-size: 14px;
+		    }
+		}
+    </style>
+</head>
+
+<body>
+    <header>
+        <div><h1>E-Learning Hub</h1></div>
+        <nav>
+			<a href="/test.html">Home</a>
+            <a href="/about.html">About</a>
+            <a href="/trainers.html">Trainers</a>
+            <a href="/Admin.html">Admin</a>
+            <a href="/available-courses.html">Courses</a>
+            <a href="/contact.html">Contact Us</a>
+        </nav>
+        <div class="sign-in">
+            <a href="/users.html">Buy Course</a>
+        </div>
+    </header>
+
+    <main>
+        <h2>Trainer Information</h2>
+
+        <!-- Trainer Form -->
+		<form id="trainerForm">
+		    <label for="trainerId">ID:</label>
+		    <input type="number" id="id" name="id" required><br><br>
+
+		    <label for="trainerName">Name:</label>
+		    <input type="text" id="name" name="name" required><br><br>
+
+		    <label for="trainerSubject">Subject:</label>
+		    <input type="text" id="subject" name="subject" required><br><br>
+
+		    <label for="trainerQualification">Qualification:</label>
+		    <input type="text" id="qualification" name="qualification" required><br><br>
+
+		    <label for="trainerEmail">Email:</label>
+		    <input type="email" id="email" name="email" required><br><br>
+
+		    <label for="trainerMobile">Mobile Number:</label>
+		    <input type="number" id="mobileNumber" name="mobileNumber" required><br><br>
+
+		    <button type="submit">Add Trainer</button>
+		</form>
+
+		<div id="responseMessage"></div>
+
+		<script>
+				    document.getElementById('trainerForm').addEventListener('submit', function(event) {
+				        event.preventDefault();
+						
+						const id = document.getElementById('id').value;
+				        const name = document.getElementById('name').value;
+						const subject = document.getElementById('subject').value;
+						const qualification = document.getElementById('qualification').value;
+						const email = document.getElementById('email').value;
+			            const mobileNumber = document.getElementById('mobileNumber').value;
+
+						const trainerData = {
+						    id: id,
+						    name: name,
+						    subject: subject,
+						    qualification: qualification,
+						    email: email,
+						    mobileNumber: mobileNumber
+						};
+
+						// Correct the URL to match your backend
+				        fetch('/trainerForm', {  // Ensure the endpoint is correct
+				            method: 'POST',
+				            headers: {
+				                'Content-Type': 'application/json'
+				            },
+				            body: JSON.stringify(trainerData)
+				        })
+				        .then(response => {
+				            if (!response.ok) {
+				                throw new Error('Failed to add trainer');
+				            }
+				            return response.json();
+				        })
+				        .then(data => {
+				            console.log('Success:', data);
+				            document.getElementById('responseMessage').innerText = 'Trainer added successfully!';
+				            document.getElementById('responseMessage').style.color = 'green'; 
+				            document.getElementById('trainerForm').reset();
+				        })
+				        .catch(error => {
+				            console.error('Error:', error);
+				            document.getElementById('responseMessage').innerText = 'Failed to add trainer!';
+				            document.getElementById('responseMessage').style.color = 'red'; 
+				        });
+				    });
+				</script>
+    </main>
+</body>
+
+</html>

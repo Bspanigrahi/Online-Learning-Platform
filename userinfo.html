@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+			background-image: url('backgrounduser.jpg');
+			background-repeat: no-repeat;
+			background-size: cover;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .user-info {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        main {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 4px 9px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+			background: transparent;
+        }
+
+        #userTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+			
+        }
+
+        #userTable th, #userTable td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        #userTable th {
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+			
+        }
+		table{
+			background-color: white;
+		}
+
+        button {
+            padding: 10px 20px;
+            margin: 10px 0;
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #logoutBtn {
+            margin-top: 20px;
+        }
+		h1{
+			color: white;
+		}
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to the User Dashboard!</h1>
+    
+
+    <main>
+        <h1>Available Users</h1>
+        <button id="loadUsersBtn">Load User Data</button>
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>User Email</th>
+                    <th>Course ID</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+                <!-- User data will be dynamically inserted here -->
+            </tbody>
+        </table>
+		<div class="user-info" id="userinfo"></div>
+					    <button class="logout" id="logoutBtn">Logout</button>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loggedInUserEmail = sessionStorage.getItem('loggedInUserEmail');
+
+            if (!loggedInUserEmail) {
+                alert('You are not logged in!');
+                window.location.href = '/login.html';
+                return;
+            }
+
+            document.getElementById('loadUsersBtn').addEventListener('click', function() {
+                fetch(`/userForm/login-user-info?userEmail=${loggedInUserEmail}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error fetching user data');
+                    }
+                    return response.json();
+                })
+                .then(user => {
+                    console.log('Logged in user:', user);
+                    const userTableBody = document.getElementById('userTableBody');
+                    userTableBody.innerHTML = '';
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td>${user.course ? user.course.id : 'No course assigned'}</td>
+                    `;
+                    userTableBody.appendChild(row);
+                })
+                .catch(error => {
+                    console.error('Error fetching user:', error);
+                });
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                sessionStorage.removeItem('loggedInUserEmail');
+                window.location.href = '/login.html';
+            });
+        });
+    </script>
+
+</body>
+</html>

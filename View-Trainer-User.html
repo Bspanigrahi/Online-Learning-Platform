@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Trainers</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* Add your existing styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-image: url('userbackground.jpg');
+        }
+        header {
+            background: #35424a;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            margin-top: 200px;
+            background: transparent;
+            box-shadow: 0px 0px 4px 9px rgba(0, 0, 0, 0.2);  
+        }
+        h1, h2 {
+            color: #35424a;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #dddddd;
+        }
+        th {
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .deleteBtn {
+            padding: 8px 12px;
+            background-color: #f44336; 
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4e636b;
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        <h1>Available Trainers</h1>
+        <div id="message" style="color: green; margin-bottom: 10px;"></div> <!-- Message display -->
+        <button id="loadCoursesBtn">Load Trainers</button>
+        <table id="courseTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Subject</th>
+                    <th>Qualification</th>
+                    <th>Email</th>
+                    <th>Mobile Number</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody id="userList"></tbody>
+        </table>
+
+        <!-- Add Trainer Form -->
+        <h2>Add New Trainer</h2>
+        <form id="addTrainerForm">
+            <input type="number" id="trainerId" placeholder="Id" required>
+            <input type="text" id="trainerName" placeholder="Name" required>
+            <input type="text" id="trainerSubject" placeholder="Subject" required>
+            <input type="text" id="trainerQualification" placeholder="Qualification" required><br><br>
+            <input type="email" id="trainerEmail" placeholder="Email" required>
+            <input type="tel" id="trainerMobile" placeholder="Mobile Number" required>
+			<br><br>
+            <button type="submit">Add Trainer</button>
+            <button id="back">Back</button>
+        </form>
+    </main>
+    
+    <script>
+        document.getElementById('back').addEventListener('click', function () {
+            window.location.href = '/welcome.html'; // Redirects to the Add Course page
+        });
+
+        document.getElementById('loadCoursesBtn').addEventListener('click', loadTrainers);
+
+        function loadTrainers() {
+            fetch('/trainerForm/trainers') // Ensure this matches your endpoint
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const userList = document.getElementById('userList');
+                    userList.innerHTML = ''; // Clear previous list if any
+                    const message = document.getElementById('message'); // Message display element
+                    message.textContent = ''; // Clear previous messages
+
+                    // Assuming 'data' is an array of trainers
+                    data.forEach(trainer => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${trainer.id}</td>
+                            <td>${trainer.name}</td>
+                            <td>${trainer.subject}</td>
+                            <td>${trainer.qualification}</td>
+                            <td>${trainer.email}</td>
+                            <td>${trainer.mobileNumber}</td>
+                            <td><button class="deleteBtn" data-id="${trainer.id}">Remove</button></td>
+                        `;
+                        userList.appendChild(row);
+                    });
+
+                    // Add event listener for remove buttons
+                    const deleteButtons = document.querySelectorAll('.deleteBtn');
+                    deleteButtons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            const trainerId = this.dataset.id;
+                            deleteTrainer(trainerId);
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching trainers:', error);
+                });
+        }
+
+        // Function to delete a trainer
+        function deleteTrainer(trainerId) {
+            fetch(`/trainerForm/trainers/${trainerId}`, {
+                method: 'DELETE',
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const message = document.getElementById('message'); // Message display element
+                message.textContent = "Trainer removed successfully!";
+                loadTrainers(); // Refresh the trainer list after deletion
+            })
+            .catch(error => {
+                console.error('Error deleting trainer:', error);
+                const message = document.getElementById('message'); // Message display element
+                message.textContent = "Failed to remove trainer. Please try again.";
+            });
+        }
+
+        // Add Trainer form submission
+        document.getElementById('addTrainerForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const newTrainer = {
+                id: document.getElementById('trainerId').value,
+                name: document.getElementById('trainerName').value,
+                subject: document.getElementById('trainerSubject').value,
+                qualification: document.getElementById('trainerQualification').value,
+                email: document.getElementById('trainerEmail').value,
+                mobileNumber: document.getElementById('trainerMobile').value,
+            };
+
+            fetch('/trainerForm/add', { // Adjust endpoint for add
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newTrainer)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                loadTrainers(); // Use the function to refresh the list
+                document.getElementById('addTrainerForm').reset(); // Reset the form
+                const message = document.getElementById('message'); // Message display element
+                message.textContent = "Trainer added successfully!";
+            })
+            .catch(error => {
+                console.error('Error adding trainer:', error);
+                const message = document.getElementById('message'); // Message display element
+                message.textContent = "Failed to add trainer. Please try again.";
+            });
+        });
+
+    </script>
+
+</body>
+</html>

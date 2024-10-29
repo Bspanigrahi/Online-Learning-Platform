@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Courses</title>
+    <link rel="stylesheet" href="/css/styles.css">
+   
+</head>
+<body>
+    <header>
+        <h1>E-Learning Hub</h1>
+		<div><h1>E-Learning Hub</h1></div> 
+		        <nav>
+		            <a href="/test.html">Home</a>
+		            <a href="/about.html">About</a>
+		            <a href="/Admin.html">Admin</a>
+		            <a href="/available-trainers.html">Trainer</a>
+		            <a href="/available-courses.html">Courses</a>
+		            <a href="/contact.html">Contact Us.</a>
+		        </nav>
+		        <div class="sign-in">
+		            <a href="/users.html">Buy Course</a>
+		        </div>
+       
+    </header>  
+    
+    <main>
+        <h1>Available Users</h1>
+        <button id="loadCoursesBtn">Load Users</button>
+        <table id="courseTable">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>User Email</th>
+					<th>Course Id</th>
+                </tr>
+            </thead>
+            <tbody id="userList"></tbody>
+        </table>
+    </main>
+   <script>
+	document.getElementById('loadCoursesBtn').addEventListener('click', function () {
+	    fetch('/userForm/users') // Call the API endpoint
+	        .then(response => {
+	            if (!response.ok) {
+	                throw new Error('Network response was not ok ' + response.statusText);
+	            }
+	            return response.json();
+	        })
+	        .then(data => {
+	            const userList = document.getElementById('userList');
+	            userList.innerHTML = ''; // Clear previous list if any
+
+	            // Assuming 'data' is an array of users, iterate over it to create <tr> elements
+	            data.forEach(user => {
+	                const row = document.createElement('tr');
+	                row.innerHTML = `
+	                    <td>${user.id}</td>
+	                    <td>${user.username}</td>
+	                    <td>${user.email}</td>
+	                    <td>${user.course !== null ? user.course.id : 'No course assigned'}</td>  <!-- Handle undefined courseId -->
+	                `;
+	                userList.appendChild(row);
+	            });
+	        })
+	        .catch(error => {
+	            console.error('Error fetching users:', error);
+	        });
+	});
+	</script>
+
+</body>
+</html>

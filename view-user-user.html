@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Users</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+			background-image: url('backgrounduser.jpg');
+			background-size: cover;
+										            background-position: center;
+										            
+										            background-attachment: fixed;
+										            position: relative;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        main {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 9px 6px rgb(0, 0, 0);
+			background:transparent;
+        }
+
+        h1 {
+            text-align: center;
+			color: white;
+        }
+
+        table {
+			
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+			background-color: white;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .add-button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .remove-button {
+            background-color: #f44336; /* Red */
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+      
+    
+    <main>
+        <h1>Available Users</h1>
+        <button id="loadCoursesBtn">Load Users</button>
+		<button id="back">Back</button>
+        <table id="courseTable">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>User Email</th>
+                    <th>Course ID</th>
+                   
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody id="userList"></tbody>
+        </table>
+    </main>
+    
+    <script>
+		document.getElementById('back').addEventListener('click', function () {
+								        window.location.href = '/welcome.html'; // Redirects to the Add Course page
+								    });
+        document.getElementById('loadCoursesBtn').addEventListener('click', function () {
+            fetch('/userForm/users') // Call the API endpoint
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const userList = document.getElementById('userList');
+                    userList.innerHTML = ''; // Clear previous list if any
+
+                    // Assuming 'data' is an array of users, iterate over it to create <tr> elements
+                    data.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td>${user.course !== null ? user.course.id : 'No course assigned'}</td>
+                           
+                            <td><button class="remove-button" data-id="${user.id}">Remove</button></td>
+                        `;
+                        userList.appendChild(row);
+                    });
+
+                    // Add event listeners for remove buttons
+                    const removeButtons = document.querySelectorAll('.remove-button');
+                    removeButtons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            const userId = this.dataset.id; // Get the ID from data attribute
+                            removeUser(userId);
+                        });
+                    });
+
+                    // Add event listeners for add buttons
+                    const addButtons = document.querySelectorAll('.add-button');
+                    addButtons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            const userId = this.closest('tr').children[0].textContent; 
+							// Get user ID from the rowconst 
+                            addUser(userId);
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching users:', error);
+                });
+        });
+
+        // Function to remove a user
+        function removeUser(userId) {
+            fetch(`/userForm/users/${userId}`, { // Adjust endpoint for remove
+                method: 'DELETE',
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                // Reload users after deletion
+                document.getElementById('loadCoursesBtn').click();
+            })
+            .catch(error => {
+                console.error('Error removing user:', error);
+            });
+        }
+
+        // Function to add a user (example placeholder function)
+        function addUser(userId) {
+            // Implement the logic to add the user based on the ID or other parameters.
+            // You may need a form to gather additional information for adding a user.
+            console.log(`Add user with ID: ${userId}`);
+            // For now, just log to the console
+        }
+    </script>
+
+</body>
+</html>

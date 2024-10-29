@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Section</title>
+    <style>
+        /* Reset some basic styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: black; /* Set body text color to black */
+        }
+
+        /* Header styling */
+		/* Header styling */
+	    header {
+					background-color: #ffffff;
+						    padding: 20px;
+						    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+						    display: flex;
+						    align-items: center;
+						    width: 100%; /* Ensures header takes full width */
+						    position: fixed; /* Fix position at the top */
+						    top: 0; /* Align to top */
+						    left: 0; /* Align to left */
+						    z-index: 1000; /* Ensure it stays on top */
+						    justify-content: space-between;
+						    padding-bottom: 4px;
+						    padding: 20px;
+		        }
+
+				header h1 {
+								    font-size: 24px;
+								    color: #333;
+								    font-weight: bold;
+								    margin: 0; /* Remove margin */
+								}
+
+								nav {
+								    flex-grow: 1;
+								    display: flex;
+								    justify-content: center; /* Center the navigation items */
+								    gap: 30px;
+								}
+
+								nav a {
+								    text-decoration: none;
+								    font-size: 16px;
+								    color: #333;
+								}
+
+								nav a:hover {
+								    color: teal;
+								}
+
+				        /* Sign In Button */
+				        .sign-in {
+				            margin-left: auto;
+				        }
+
+				        .sign-in a {
+				            text-decoration: none;
+				            background-color: teal;
+				            color: white;
+				            padding: 10px 20px;
+				            border-radius: 5px;
+				        }
+
+				        .sign-in a:hover {
+				            background-color: #005f5f;
+				        }
+
+        /* Main Content */
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+			background-image: url('/trainer.jpg'); /* Background image */
+			           background-size: cover; /* Ensure the background image covers the whole area */
+			           background-position: center; /* Center the background image */
+            justify-content: flex-start; /* Align content to the top */
+            min-height: 100vh; /* Full height of the viewport */
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* Prevent overflow for pseudo-element */
+			margin-top: 20px;
+			padding-top: 90px;
+        }
+
+        /* Pseudo-element for background blur */
+        main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+			background-color: rgba(0, 0, 0, 0.5); /* Adjust transparency */
+			           z-index: 1;
+            
+            z-index: 0; /* Lower z-index for the blurred background */
+        }
+
+        /* About Section */
+        #about {
+            padding: 50px;
+            text-align: center;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            border-radius: 10px; /* Rounded corners */
+            z-index: 1; /* Higher z-index for the content on top */
+			box-shadow: 0px 0px 9px 9px rgb(255, 255, 255); /* Add some shadow for depth */
+			background-color: transparent;
+			color:white;
+        }
+#heading{
+	background-color: #ffffff;
+	backdrop-filter: blur(10px);
+}
+        h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: rgb(128, 64, 0);
+            background-color: rgba(255, 255, 255, 0.3); /* A translucent background color */
+            border-radius: 10px; /* Rounded corners */
+            padding: 10px 20px; /* Padding for spacing */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+        }
+
+        .about-container {
+            display: flex;
+            justify-content: space-between; /* Changed to space-between */
+            align-items: center;
+            gap: 30px;
+            max-width: 900px; /* Set max width for better layout */
+            margin: 0 auto; /* Center the container */
+			background-color: transparent;
+			box-shadow: 0px 0px 9px 9px rgb(255, 255, 255); /* Add some shadow for depth */
+			border-radius: 7px;
+        }
+
+        .text-content {
+            flex: 1; /* Allow the text to take available space */
+            text-align: left; /* Align text to the left */
+            font-size: 18px; /* Font size for text */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px; /* Add some padding */
+            border-radius: 10px; /* Rounded corners */
+            backdrop-filter: blur(10px); /* Apply the blur effect */
+			background-color: transparent;
+        }
+
+        .image-container {
+            flex: 0 0 300px; /* Set fixed width for the image container */
+        }
+
+        img {
+            width: 100%; /* Make image responsive */
+            height: 352px; /* Maintain aspect ratio */
+            border-radius: 10px; /* Rounded corners for the image */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div>
+            <h1>E-Learning Hub</h1>
+        </div>
+        <nav>
+			
+								<a href="/test.html">Home</a>
+						           <a href="/about.html">About</a>
+
+						           <a href="/Admin.html">Admin</a>
+								   <a href="/available-trainers.html">Trainer</a>
+								  
+						           <a href="/available-courses.html">Courses</a>
+
+								<a href="/contact.html">Contact Us.</a>
+						       </nav>
+						       <div class="sign-in">
+						           <a href="/users.html">Buy Course</a>
+						       
+
+        
+        </div>
+    </header>
+
+    <main>
+        <!-- About Section -->
+        <section id="about">
+            <h2 id="heading">About Our Platform</h2>
+
+            <div class="about-container">
+                <!-- Text Content -->
+                <div class="text-content">
+                    <p><strong>Our Mission:</strong> To provide high-quality online education accessible to everyone, anywhere in the world.</p>
+                    <p><strong>Courses Offered:</strong> We offer a wide range of courses including Java, Python, Web Development, Data Science, and more, tailored to beginner and advanced learners.</p>
+                    <p><strong>Learning Flexibility:</strong> Learn at your own pace with 24/7 access to course materials, from anywhere and at any time.</p>
+                    <p><strong>Interactive Platform:</strong> Our platform includes interactive quizzes, assignments, and live coding challenges to enhance your learning experience.</p>
+                    <p><strong>Expert Mentorship:</strong> Learn from experienced mentors who are industry experts with years of practical experience.</p>
+                    <p><strong>Community Support:</strong> Join a global community of learners and collaborate, discuss, and share knowledge with peers from around the world.</p>
+                </div>
+
+                <!-- Image -->
+                <div class="image-container">
+                    <img src="/trainer.jpg" alt="Platform Image"> <!-- Ensure to replace with a valid image path -->
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

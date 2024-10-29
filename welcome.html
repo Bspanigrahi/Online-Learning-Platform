@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* Header styling */
+        header {
+            background-color: #ffffff;
+            padding: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+            margin-right: auto;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            justify-content: center; /* Center items in nav */
+            flex-grow: 1;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #333;
+        }
+
+        nav a:hover {
+            color: teal;
+        }
+
+        /* Sign In Button */
+        .sign-in {
+            margin-left: auto;
+        }
+
+        .sign-in a {
+            text-decoration: none;
+            background-color: teal;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .sign-in a:hover {
+            background-color: #005f5f;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center elements horizontally */
+            height: 100vh; /* Full viewport height */
+            margin-top: 0; /* Ensure body starts right after header */
+            background-image: url('welcomee.jpg');
+            background-size: cover; /* Ensure the background image covers the whole area */
+            background-position: center; /* Center the background image */
+        }
+
+        h1, h2 {
+            color: #333;
+            margin-bottom: 20px;
+            margin-top: 20px; /* Space from the header */
+        }
+
+        .content-box {
+            background-color: transparent; /* Fully transparent background */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for the box */
+            padding: 60px; /* Padding inside the box */
+            width: 80%; /* Width of the box */
+            max-width: 600px; /* Maximum width */
+            margin: 20px auto; /* Center the box with margin */
+            text-align: center; /* Center text */
+            margin-top: 100px; /* Top margin */
+			box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.1); /* Add some shadow for depth */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center form elements */
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-bottom: 10px; /* Space between label and input */
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px; /* Space below the input field */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px; /* Set a fixed width for input */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: teal;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005f5f; /* Change button color on hover */
+        }
+
+        #logoutMessage {
+            color: green;
+        }
+
+        #add {
+            padding: 10px 20px;
+            background-color: teal;
+            color: white; /* Text color is set to white */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Optional: Change text color on hover */
+        #add:hover {
+            background-color: #005f5f; /* Change background color on hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>E-Learning Hub</h1>
+        <nav>
+            <a href="/test.html">Home</a>
+            <a href="/about.html">About</a>
+            <a href="/available-trainers.html">Trainers</a>
+            <a href="/Admin.html">Admin</a>
+            <a href="/available-users.html">Users</a>
+            <a href="/available-courses.html">Courses</a>
+            <a href="/contact.html">Contact Us</a>
+        </nav>
+        <div class="sign-in">
+            <a href="/users.html">Buy Course</a>
+        </div>
+    </header>
+    <main class="content-box">
+        <h1>Welcome to the Admin Dashboard</h1>
+        
+       
+        <nav>
+            <button id="add" onclick="window.location.href='/View-Courses-User.html';"><b>View Couses</b></button>
+			<button id="add" onclick="window.location.href='/View-Trainer-user.html';"><b>View Trainer</b></button>
+			<button id="add" onclick="window.location.href='/View-user-user.html';"><b>View Users</b></button>
+        </nav>
+
+        <br><br>
+
+        <button onclick="logout()">Logout</button>
+        <p id="logoutMessage" style="display: none;"></p> 
+
+        <script>
+           
+            
+
+            // Logout function
+            function logout() {
+                fetch('/admin/logout', {
+                    method: 'POST'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = 'test.html'; // Redirect to home page without alert
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        </script>
+    </main>
+</body>
+</html>
